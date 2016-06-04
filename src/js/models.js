@@ -6,15 +6,27 @@ var PersonModel = Backbone.Model.extend({
 
 var PersonView = Backbone.View.extend({
   tagName: 'li',
-  template: _.template('<h1><%= name %></h1>'),
+  template: _.template(myPersonTemplate),
   render: function(){
     this.$el.html(this.template(this.model.toJSON()));
-    $('.people').append(this.$el);
+    return this;
   },
   initialize: function () {
     this.render();
   }
 });
+
+var PeopleListView = Backbone.View.extend({
+  el: '#people',
+  render: function () {
+
+  },
+  initialize: function () {
+    this.render();
+  }
+});
+
+var myPeopleList = new PeopleListView({ collection: myPeople });
 
 
 var sashimi1 = new PersonModel({ name: 'Sashimi Udon 1' });
