@@ -1,77 +1,59 @@
 var PersonModel = Backbone.Model.extend({
-  defaults: {
-    name: null
-  }
+    defaults:{name: null}
 });
+var PeopleList = Backbone.Collection.extend({
+    model: PersonModel
+});
+var person1 = new PersonModel({name: "Speros"});
+var person2 = new PersonModel({name: "Mike"});
+var person3 = new PersonModel({name: "Martin"});
+var person4 = new PersonModel({name: "Charlie"});
+var person5 = new PersonModel({name: "Dylan"});
+var person6 = new PersonModel({name: "Kris"});
+var myPeople = new PeopleList([person1, person2, person3, person4, person5, person6]);
+var myPersonTemplate = "<h1><%= name %></h1>";
 
 var PersonView = Backbone.View.extend({
-  tagName: 'li',
-  template: _.template(myPersonTemplate),
-  render: function(){
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  },
-  initialize: function () {
-    this.render();
-  }
+    tagName: 'li',
+    template: _.template(myPersonTemplate),
+    initialize: function(){
+        this.render();
+    },
+    render: function(){
+        //this.$el.html('<h1>test</h1>');
+        this.$el.html(this.template(this.model.toJSON()));
+        //this.$el.html(this.template(this.model));
+        //console.log(this);
+        //$('.people').append(this.template(this.model));
+        console.log(this.model);
+        console.log(this.template(this.model.toJSON()));
+        //$('.people').html(this.template(this.model.toJSON()));
+        return this;
+    }
 });
+
+
+//var pv1 = new PersonView({model: person1});
+
+
 
 var PeopleListView = Backbone.View.extend({
-  el: '#people',
-  render: function () {
-
-  },
-  initialize: function () {
-    this.render();
-  }
+    el: '#people',
+    initialize: function(){
+        this.render();
+    },
+    render: function(){
+        //...use _.each() in this render method! Don't forget the context parameter!
+        _.each(this.collection.models, function (person) {
+            //console.log(this.collection);
+            var personView = new PersonView({
+                model: person
+            });
+            //console.log(personView);
+            //this.$el.append(personView.render(), $el);
+            $('#people').append(personView.$el);
+        });
+        return this;
+    }
 });
-
-var myPeopleList = new PeopleListView({ collection: myPeople });
-
-
-var sashimi1 = new PersonModel({ name: 'Sashimi Udon 1' });
-var sashimi2 = new PersonModel({ name: 'Sashimi Udon 2' });
-var sashimi3 = new PersonModel({ name: 'Sashimi Udon 3' });
-var sashimi4 = new PersonModel({ name: 'Sashimi Udon 4' });
-var sashimi5 = new PersonModel({ name: 'Sashimi Udon 5' });
-
-var sashimi1View = new PersonView({ model: sashimi1 });
-var sashimi2View = new PersonView({ model: sashimi2 });
-var sashimi3View = new PersonView({ model: sashimi3 });
-var sashimi4View = new PersonView({ model: sashimi4 });
-var sashimi5View = new PersonView({ model: sashimi5 });
-
-var StackModel = Backbone.Model.extend({
-  defaults: {
-    name: null
-  }
-});
-
-var StackView = Backbone.View.extend({
-  tagName: 'li',
-   template: _.template('<div><h2><%= name %></h2></div>'),
-   render: function () {
-     this.$el.html(this.template(this.model.toJSON()));
-     $('.stacks').append(this.$el);
-   },
-   initialize: function()  {
-     this.render();
-   }
-});
-
-var language1 = new StackModel({ name: 'ruby' });
-var language2 = new StackModel({ name: 'python' });
-var language3 = new StackModel({ name: 'ada' });
-var language4 = new StackModel({ name: 'eiffel' });
-var language6 = new StackModel({ name: 'Visual Basic' });
-var language5 = new StackModel({ name: 'Japanese Basic' });
-var language7 = new StackModel({ name: 'Cisco IOS' });
-
-var languageView1 = new StackView({ model: language1 });
-var languageView2 = new StackView({ model: language3 });
-var languageView3 = new StackView({ model: language3 });
-var languageView4 = new StackView({ model: language4 });
-var languageView5 = new StackView({ model: language5 });
-var languageView6 = new StackView({ model: language6 });
-var languageView7 = new StackView({ model: language7 });
-
+var myPeopleList = new PeopleListView({collection: myPeople});

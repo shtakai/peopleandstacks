@@ -1,20 +1,8 @@
-ul.people{
-	margin-top: 0px;
-	padding-left: 0px;
-	display: inline-block;
-	vertical-align: top;
-	list-style-type: none;
-	width: 49%;
-}
-ul.people li{
-	border: 2px solid red;
-}
-ul.stacks{
+#people  {
   list-style-type: none;
-	display: inline-block;
-	vertical-align: top;
-	width: 49%;
-}
-ul.stacks div{
-	border: 2px solid green;
+  display: inline-block;
+  width: 40%;
+  background: #0C5792;
+  color: white;
+  border: 1px solid black;
 }
